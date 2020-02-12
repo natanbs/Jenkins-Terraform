@@ -27,7 +27,6 @@ pipeline {
 			   defaultValue: 'tf-customer1',
 			   description: 'Env or Customer name')
 		choice (name: 'ACTION',
-				// choices: [ 'plan', 'apply', 'all', 'destroy', 'show'],
 				choices: [ 'plan', 'apply', 'destroy', 'show'],
 				description: 'Optional. terraform show / apply (perform changes) / plan (show diff) defaults to show')
 		string (name: 'PROFILE',
@@ -73,41 +72,9 @@ pipeline {
 				}
 			}
 		}		
-		// stage('terraform init') {
-		// 	when { anyOf
-		// 			{
-		// 				environment name: 'ACTION', value: 'all';
-		// 				environment name: 'ACTION', value: 'plan';
-		// 				environment name: 'ACTION', value: 'apply';
-		// 				environment name: 'ACTION', value: 'destroy';
-		// 			}
-		// 		}
-		// 	steps {
-		// 		dir("${PROJECT_DIR}") {
-		// 			script {
-		// 				wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
-		// 					withCredentials([
-		// 						[ $class: 'AmazonWebServicesCredentialsBinding',
-		// 							accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-		// 							secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-		// 							credentialsId: 'larobot-aws-credentials',
-		// 							]])
-		// 						{
-		// 						try {
-		// 							tfCmd('init')
-		// 						} catch (ex) {
-		// 							currentBuild.result = "UNSTABLE"
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
 		stage('terraform plan') {
 			when { anyOf
 					{
-						environment name: 'ACTION', value: 'all';
 						environment name: 'ACTION', value: 'plan';
 						environment name: 'ACTION', value: 'apply'
 					}
@@ -143,7 +110,6 @@ pipeline {
 		stage('terraform apply') {
 			when { anyOf
 					{
-						environment name: 'ACTION', value: 'all';
 						environment name: 'ACTION', value: 'apply'
 					}
 				}
@@ -216,8 +182,8 @@ pipeline {
 			}
 		}
 		stage('terraform show current state') {
-			when { anyOf { environment name: 'ACTION', value: 'all';
-				       environment name: 'ACTION', value: 'show'} }
+			when { anyOf { 
+				       	environment name: 'ACTION', value: 'show'} }
 			steps {
 				dir("${PROJECT_DIR}") {
 					script {
