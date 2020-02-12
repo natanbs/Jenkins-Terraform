@@ -27,8 +27,8 @@ pipeline {
 			   defaultValue: 'tf-customer1',
 			   description: 'Env or Customer name')
 		choice (name: 'ACTION',
-				choices: [ 'plan', 'apply', 'destroy', 'show'],
-				description: 'Optional. terraform show / apply (perform changes) / plan (show diff) defaults to show')
+				choices: [ 'plan', 'apply', 'destroy'],
+				description: 'Run terraform plan / apply / destroy')
 		string (name: 'PROFILE',
 			   defaultValue: 'tikal',
 			   description: 'Optional. Target aws profile defaults to tikal')
