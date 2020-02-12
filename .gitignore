@@ -1,0 +1,4 @@
+*.tfstate
+**/var.key_name.*
+*.t
+**/.terraform/
