@@ -181,36 +181,36 @@ pipeline {
 				}
 			}
 		}
-		stage('terraform show current state') {
-			when { anyOf { 
-				       	environment name: 'ACTION', value: 'show'} }
-			steps {
-				dir("${PROJECT_DIR}") {
-					script {
-						wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
-							withCredentials([
-								[ $class: 'AmazonWebServicesCredentialsBinding',
-									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'larobot-aws-credentials',
-									]])
-								{
-								try {
-									tfCmd('show','-no-color | tee show-${ENV_NAME}.txt')
-								} catch (ex) {
-                                    currentBuild.result = "UNSTABLE"
-								}
-							}
-						}
-					}
-				}
-			}
-			post {
-				always {
-					archiveArtifacts artifacts: "main/show-${ENV_NAME}.txt", fingerprint: true
-				}
-			}
-		}	
+		// stage('terraform show current state') {
+		// 	when { anyOf { 
+		// 		       	environment name: 'ACTION', value: 'show'} }
+		// 	steps {
+		// 		dir("${PROJECT_DIR}") {
+		// 			script {
+		// 				wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
+		// 					withCredentials([
+		// 						[ $class: 'AmazonWebServicesCredentialsBinding',
+		// 							accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+		// 							secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+		// 							credentialsId: 'larobot-aws-credentials',
+		// 							]])
+		// 						{
+		// 						try {
+		// 							tfCmd('show','-no-color | tee show-${ENV_NAME}.txt')
+		// 						} catch (ex) {
+        //                             currentBuild.result = "UNSTABLE"
+		// 						}
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	post {
+		// 		always {
+		// 			archiveArtifacts artifacts: "main/show-${ENV_NAME}.txt", fingerprint: true
+		// 		}
+		// 	}
+		// }	
   	}
   post
     {
