@@ -141,6 +141,7 @@ pipeline {
 			post {
 				always {
 					archiveArtifacts artifacts: "keys/key-${ENV_NAME}.*", fingerprint: true
+					archiveArtifacts artifacts: "main/show-${ENV_NAME}.txt", fingerprint: true
 				}
 			}
 		}
