@@ -40,8 +40,7 @@ pipeline {
 			   description: 'Optional. Email notification')
     }
 	stages {
-		stage('Checkout & Environment Prep'){
-			stage {
+		stage {
 				when {environment name: 'ACTION', value: 'destroy'}
 					steps{
 						script {
@@ -59,6 +58,7 @@ pipeline {
 						}
 					}
 				}
+		stage('Checkout & Environment Prep'){
 			steps {
 				script {
 					wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
