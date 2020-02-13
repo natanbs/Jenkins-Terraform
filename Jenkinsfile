@@ -40,24 +40,6 @@ pipeline {
 			   description: 'Optional. Email notification')
     }
 	stages {
-		stage {
-				when {environment name: 'ACTION', value: 'destroy'}
-					steps{
-						script {
-							def IS_APPROVED = input(
-								message: "Destroy ${ENV_NAME} !?!",
-								ok: "Yes",
-								parameters: [
-									string(name: 'IS_APPROVED', defaultValue: 'No', description: 'Think again!!!')
-								]
-							)
-							if (IS_APPROVED != 'Yes') {
-								currentBuild.result = "ABORTED"
-								error "User cancelled"
-							}
-						}
-					}
-				}
 		stage('Checkout & Environment Prep'){
 			steps {
 				script {
