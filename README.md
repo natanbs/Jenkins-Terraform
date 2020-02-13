@@ -97,31 +97,31 @@ Example output:<br/>
 aws_access_key_id = ***************OUEU<br/>
 aws_secret_access_key = ********************************i8S8<br/>
 
-aws configure
-Example output:
-AWS Access Key ID [****************OUEU]:
-AWS Secret Access Key [****************i8S8]:
-Default region name [eu-central-1]:
-Default output format [text]:
+aws configure<br/>
+Example output:<br/>
+AWS Access Key ID [****************OUEU]:<br/>
+AWS Secret Access Key [****************i8S8]:<br/>
+Default region name [eu-central-1]:<br/>
+Default output format [text]:<br/>
 
 #### Initiate the project:
-cd base
-terraform init
-terraform plan  
-terraform apply // Run only once.
+cd base<br/>
+terraform init<br/>
+terraform plan<br/>
+terraform apply // Run only once.<br/>
 
-Create an env:
-cd main
-terraform workspace new tf-customer1  // Will create and select the tf-customer1 env. Now on all the actions will be performed in this env.
-terraform init                        // Downloads and installs all the required modules for this project.
-terraform plan                        // Show which components terraform will create or update with once applied in AWS.
-terraform apply                       // Will perform all the actions shown in the plan.
-terraform destroy                     // Once you don't need the env anymore this command will remove all the installed components. 
+Create an env:<br/>
+cd main<br/>
+terraform workspace new tf-customer1  // Will create and select the tf-customer1 env. Now on all the actions will be performed in this env.<br/>
+terraform init                        // Downloads and installs all the required modules for this project.<br/>
+terraform plan                        // Show which components terraform will create or update with once applied in AWS.<br/>
+terraform apply                       // Will perform all the actions shown in the plan.<br/>
+terraform destroy                     // Once you don't need the env anymore this command will remove all the installed components.<br/> 
 
 #### Created components:
-Once teraform is applied, you will be able to find in the AWS console all the components created:
-- S3 bucket (under env: you will find a folder per environment which will include the env's tfstate file)
-- Dynamodb table (which manages and maintains the tfstate files)
+Once teraform is applied, you will be able to find in the AWS console all the components created:<br/>
+- S3 bucket (under env: you will find a folder per environment which will include the env's tfstate file)<br/>
+- Dynamodb table (which manages and maintains the tfstate files)<br/>
 - VPC
 - Subnets - two private and two public
 - Route tables
