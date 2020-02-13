@@ -95,6 +95,7 @@ vi ~/.aws/credentials
 Example output:
 [tikal]
 aws_access_key_id = ***************OUEU
+
 aws_secret_access_key = ********************************i8S8
 
 aws configure
