@@ -41,6 +41,23 @@ pipeline {
     }
 	stages {
 		stage('Checkout & Environment Prep'){
+			when {environment name: 'ACTION', value: 'destroy'}
+				steps{
+					script {
+						def IS_APPROVED = input(
+							message: "Destroy ${ENV_NAME} !?!",
+							ok: "Yes",
+							parameters: [
+								string(name: 'IS_APPROVED', defaultValue: 'No', description: 'Think again!!!')
+							]
+						)
+						if (IS_APPROVED != 'Yes') {
+							currentBuild.result = "ABORTED"
+							error "User cancelled"
+						}
+					}
+				}
+			}
 			steps {
 				script {
 					wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
@@ -52,21 +69,6 @@ pipeline {
 								]])
 							{
 							try {
-								script {
-									if (${ACTION} == 'destroy') {
-										def IS_APPROVED = input(
-											message: "Destroy ${ENV_NAME} !?!",
-											ok: "Yes",
-											parameters: [
-												string(name: 'IS_APPROVED', defaultValue: 'No', description: 'Think again!!!')
-											]
-										)
-										if (IS_APPROVED != 'Yes') {
-											currentBuild.result = "ABORTED"
-											error "User cancelled"
-										}
-									}
-								}
 								echo "Setting up Terraform"
 								def tfHome = tool name: 'terraform-0.12.20',
 									type: 'org.jenkinsci.plugins.terraform.TerraformInstallation'
