@@ -62,26 +62,26 @@ The project's terraform file structure includes 3 folders:
 Jenkins would create / update or destroy and infrastructure you have created with terraform. In this example we used the basic of a couple of EC2s.
 
 The project's full structure: 
-.
-├── Jenkinsfile
-├── README.md
-├── base
-│   ├── main.tf
-│   ├── terraform.tfstate
-│   ├── terraform.tfvars
-│   └── variables.tf
-├── keys
-├── main
-│   ├── backend.tf
-│   ├── ec2.tf
-│   ├── main.tf
-│   ├── securitygroup.tf
-│   ├── terraform.tfvars
-│   └── variables.tf
-└── modules
-    └── backend
-        ├── main.tf
-        └── variables.tf
+.<br/>
+├── Jenkinsfile<br/>
+├── README.md<br/>
+├── base<br/>
+│   ├── main.tf<br/>
+│   ├── terraform.tfstate<br/>
+│   ├── terraform.tfvars<br/>
+│   └── variables.tf<br/>
+├── keys<br/>
+├── main<br/>
+│   ├── backend.tf<br/>
+│   ├── ec2.tf<br/>
+│   ├── main.tf<br/>
+│   ├── securitygroup.tf<br/>
+│   ├── terraform.tfvars<br/>
+│   └── variables.tf<br/>
+└── modules<br/>
+    └── backend<br/>
+        ├── main.tf<br/>
+        └── variables.tf<br/>
 
 
 #### git repository
@@ -91,9 +91,9 @@ The procedure to run the terraform code:
 
 #### Set your AWS credentials:
 
-vi ~/.aws/credentials
-Example output:
-[tikal]
+vi ~/.aws/credentials<br/>
+Example output:<br/>
+[tikal]<br/>
 aws_access_key_id = ***************OUEU<br/>
 aws_secret_access_key = ********************************i8S8<br/>
 
