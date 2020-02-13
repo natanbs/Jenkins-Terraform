@@ -57,7 +57,7 @@ pipeline {
 						}
 					}
 				}
-			}
+			
 			steps {
 				script {
 					wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
