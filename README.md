@@ -94,9 +94,8 @@ The procedure to run the terraform code:
 vi ~/.aws/credentials
 Example output:
 [tikal]
-aws_access_key_id = ***************OUEU
-
-aws_secret_access_key = ********************************i8S8
+aws_access_key_id = ***************OUEU<br/>
+aws_secret_access_key = ********************************i8S8<br/>
 
 aws configure
 Example output:
