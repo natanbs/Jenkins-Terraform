@@ -1,0 +1,89 @@
+def tfCmd(String command, String options = '') {
+	sh ( script: "cd $WORKSPACE/base && export AWS_PROFILE=${PROFILE} && export TF_ENV_profile=${PROFILE} && terraform init && terraform plan && terraform apply", returnStatus: true)
+}
+
+pipeline {
+  agent { node { label 'tf-slave' } }
+
+	environment {
+		AWS_DEFAULT_REGION = "${params.AWS_REGION}"
+		PROFILE = "${params.PROFILE}"
+		ACTION = "${params.ACTION}"
+		PROJECT_DIR = "terraform/main"
+  }
+	options {
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        timestamps()
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+  }
+	parameters {
+
+		choice (name: 'AWS_REGION',
+				choices: ['eu-central-1','us-west-1', 'us-west-2'],
+				description: 'Pick A regions defaults to eu-central-1')
+		string (name: 'PROFILE',
+			   defaultValue: 'tikal',
+			   description: 'Optional. Target aws profile defaults to tikal')
+		string (name: 'EMAIL',
+			   defaultValue: 'natanb@tikalk.com',
+			   description: 'Optional. Email notification')
+    }
+	stages {
+		stage('Checkout & Environment Prep'){
+			steps {
+				script {
+					wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
+						withCredentials([
+							[ $class: 'AmazonWebServicesCredentialsBinding',
+								accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+								secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+								credentialsId: 'larobot-aws-credentials',
+								]])
+							{
+							try {
+								echo "Setting up Terraform"
+								def tfHome = tool name: 'terraform-0.12.20',
+									type: 'org.jenkinsci.plugins.terraform.TerraformInstallation'
+									env.PATH = "${tfHome}:${env.PATH}"
+									currentBuild.displayName += "[$AWS_REGION]::[$ACTION]"
+									sh("""
+										/usr/local/bin/aws configure --profile ${PROFILE} set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+										/usr/local/bin/aws configure --profile ${PROFILE} set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+										/usr/local/bin/aws configure --profile ${PROFILE} set region ${AWS_REGION}
+										export AWS_PROFILE=${PROFILE}
+										export TF_ENV_profile=${PROFILE}
+										mkdir -p /home/jenkins/.terraform.d/plugins/linux_amd64
+									""")
+									tfCmd('version')
+							} catch (ex) {
+                                                                echo 'Err: Incremental Build failed with Error: ' + ex.toString()
+								currentBuild.result = "UNSTABLE"
+							}
+						}
+					}
+				}
+			}
+		}			
+  	}
+  post
+    {
+			always{
+			emailext (
+			body: """
+				<p>Base - Jenkins Pipeline Summary</p>
+				<p>Jenkins url: <a href='${env.BUILD_URL}/>link</a></p>
+				<p>Pipeline Blueocean： <a href='${env.JENKINS_URL}blue/organizations/jenkins/${env.JOB_NAME}/detail/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline'>${env.JOB_NAME}(pipeline page)</a></p>
+				<ul>
+				<li> Branch built: '${env.BRANCH_NAME}' </li>
+				<li> REGION: ${AWS_REGION}</li>
+				</ul>
+				""",
+				recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+				to: "${EMAIL}",
+				subject: "[Base] - ${env.JOB_NAME}-${env.BUILD_NUMBER} [$AWS_REGION]",
+				attachLog: true
+				)
+        }
+    }
+}
