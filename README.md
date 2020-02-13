@@ -120,8 +120,8 @@ terraform destroy                     // Once you don't need the env anymore thi
 
 #### Created components:
 Once teraform is applied, you will be able to find in the AWS console all the components created:<br/>
-- S3 bucket (under env: you will find a folder per environment which will include the env's tfstate file)<br/>
-- Dynamodb table (which manages and maintains the tfstate files)<br/>
+- S3 bucket (under env: you will find a folder per environment which will include the env's tfstate file)
+- Dynamodb table (which manages and maintains the tfstate files)
 - VPC
 - Subnets - two private and two public
 - Route tables
