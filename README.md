@@ -5,7 +5,7 @@
 
 In this post, we will demonstrate how multiple Terraform lifecycle infrastructures can be easily and dynamically managed and maintained per envromnment with Jenkings.
 
-#### Terraform:
+### Terraform:
 Terraform introduces infrastructure as a code and provides the ability to create, update and destroy any kind of component and environemt infrastructures in the cloud.
 Once provided with the credentials, region, and the required resources, it will be able to create the requested infrastructure. 
 
@@ -116,8 +116,8 @@ Once teraform is applied, you will be able to find in the AWS console all the co
 If you have cloned the git, have an AWS account and set the AWS credentials, yiu can instantly create new envs in AWS.
 Managing a couple or a few such envs would be easy. What happens if you have tens of envs? What if you have more than one 
 
-#### Jenkins settings:
-##### Required Jenkins plugin:
+### Jenkins settings:
+#### Required Jenkins plugin:
 - CloudBees AWS Credentials<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_AWS_Credentials.png" width="800" /><br>
 - Terraform<br>
