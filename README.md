@@ -116,12 +116,23 @@ Once teraform is applied, you will be able to find in the AWS console all the co
 If you have cloned the git, have an AWS account and set the AWS credentials, yiu can instantly create new envs in AWS.
 Managing a couple or a few such envs would be easy. What happens if you have tens of envs? What if you have more than one 
 
+
 ### Jenkins:
 #### Required Jenkins plugin:
 - CloudBees AWS Credentials<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_AWS_Credentials.png" width="800" /><br>
 - Terraform<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform.png" width="800" /><br>
+
+#### Node installation
+Create a permanent node:
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node1.png" width="800" /><br>
+This agent is configured with ssh launch method, however any method preferred.
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node2.png" width="800" /><br>
+Use jenkins user and paste its public key.
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node3.png" width="800" /><br>
+
+
 
 Using declartive Jenkinsfile. 
 
