@@ -64,7 +64,7 @@ Jenkins would create / update or destroy and infrastructure you have created wit
 The project's full structure: 
 
 ![alt text](https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Proj-tree.png =100x)
-<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Proj-tree.png" width="80" />
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Proj-tree.png" width="180" /><br>
 
 .<br/>
 ├── Jenkinsfile<br/>
