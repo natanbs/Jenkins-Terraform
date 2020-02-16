@@ -131,8 +131,27 @@ This agent is configured with ssh launch method, however any method preferred.<b
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node2.png" /><br>
 Use jenkins user and paste its public key.<br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node3.png" /><br>
+We are ready to proceed to set the job
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node4.png" /><br>
 
+#### Job settings
+Create a Pipeline job
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline1.png" /><br>
+Select:
+- Do not allow concurrent builds
+- GitHub project
+  Project url	https://github.com/natanbs/Jenkins-Terraform
+
+To add parameters, Select:
+- This project is parameterized
+  Add choice parameter: AWS_REGION and add your regions.
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline2.png" /><br>
+  Add string parameter: ENV_NAME - This will represent the environemnt / workspace / customer..
+  Add choice parameter: ACTION and add plan, apply and destroy - These are the actions Jenkins will trigger Terraform. 
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline3.png" /><br>
+  Add string parameter: PROFILE which is the AWS credential profile.
+  Add string parameter: EMAIL with the emails or mailing list to the admins.
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline4.png" /><br>
 
 
 
