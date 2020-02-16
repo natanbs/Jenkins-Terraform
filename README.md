@@ -117,4 +117,11 @@ If you have cloned the git, have an AWS account and set the AWS credentials, yiu
 Managing a couple or a few such envs would be easy. What happens if you have tens of envs? What if you have more than one 
 
 #### Jenkins settings:
+##### Required Jenkins plugin:
+- CloudBees AWS Credentials
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_AWS_Credentials.png" width="180" /><br>
+- Terraform
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform.png" width="180" /><br>
+
 Using declartive Jenkinsfile. 
+
