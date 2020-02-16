@@ -118,10 +118,10 @@ Managing a couple or a few such envs would be easy. What happens if you have ten
 
 #### Jenkins settings:
 ##### Required Jenkins plugin:
-- CloudBees AWS Credentials
-<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_AWS_Credentials.png" width="180" /><br>
-- Terraform
-<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform.png" width="180" /><br>
+- CloudBees AWS Credentials<br>
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_AWS_Credentials.png" width="3200" /><br>
+- Terraform<br>
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform.png" width="320" /><br>
 
 Using declartive Jenkinsfile. 
 
