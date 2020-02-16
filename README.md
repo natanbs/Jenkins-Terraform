@@ -153,14 +153,14 @@ To add parameters, Select:
   Add string parameter: EMAIL with the emails or mailing list to the admins.<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline4.png" /><br>
 
-Set the Git for the Pipeline:
-  Pipeline definition: Pipeline script from SCM
-    SCM: Git
-      Repositories:
-        Repository URL: git@github.com:natanbs/Jenkins-Terraform.git
-        Credentials: jenkins's user.
+Set the Git for the Pipeline:<br>
+  Pipeline definition: Pipeline script from SCM<br>
+    SCM: Git<br>
+      Repositories:<br>
+        Repository URL: git@github.com:natanbs/Jenkins-Terraform.git<br>
+        Credentials: jenkins's user.<br>
 
-Script Path: Jenkinsfile 
+Script Path: Jenkinsfile <br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline5.png" /><br>
 
 
