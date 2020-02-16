@@ -131,6 +131,8 @@ This agent is configured with ssh launch method, however any method preferred.<b
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node2.png" /><br>
 Use jenkins user and paste its public key.<br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node3.png" /><br>
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node4.png" /><br>
+
 
 
 
