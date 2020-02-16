@@ -143,14 +143,14 @@ Select:
   Project url	https://github.com/natanbs/Jenkins-Terraform
 
 To add parameters, Select:
-- This project is parameterized
-  Add choice parameter: AWS_REGION and add your regions.
+- This project is parameterized<br>
+  Add choice parameter: AWS_REGION and add your regions.<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline2.png" /><br>
-  Add string parameter: ENV_NAME - This will represent the environemnt / workspace / customer..
-  Add choice parameter: ACTION and add plan, apply and destroy - These are the actions Jenkins will trigger Terraform. 
+  Add string parameter: ENV_NAME - This will represent the environemnt / workspace / customer..<br>
+  Add choice parameter: ACTION and add plan, apply and destroy - These are the actions Jenkins will trigger Terraform. <br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline3.png" /><br>
-  Add string parameter: PROFILE which is the AWS credential profile.
-  Add string parameter: EMAIL with the emails or mailing list to the admins.
+  Add string parameter: PROFILE which is the AWS credential profile.<br>
+  Add string parameter: EMAIL with the emails or mailing list to the admins.<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline4.png" /><br>
 
 
