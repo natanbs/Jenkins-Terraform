@@ -62,7 +62,7 @@ The project's terraform file structure includes 3 folders:
 Jenkins would create / update or destroy and infrastructure you have created with terraform. In this example we used the basic of a couple of EC2s.
 
 The project's full structure: 
-![alt text width="30"](https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Proj-tree.png "Project's tree")
+![alt text width="300x"](https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Proj-tree.png "Project's tree")
 .<br/>
 ├── Jenkinsfile<br/>
 ├── README.md<br/>
