@@ -63,30 +63,7 @@ Jenkins would create / update or destroy and infrastructure you have created wit
 
 The project's full structure: 
 
-![alt text](https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Proj-tree.png =100x)
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Proj-tree.png" width="180" /><br>
-
-.<br/>
-├── Jenkinsfile<br/>
-├── README.md<br/>
-├── base<br/>
-│   ├── main.tf<br/>
-│   ├── terraform.tfstate<br/>
-│   ├── terraform.tfvars<br/>
-│   └── variables.tf<br/>
-├── keys<br/>
-├── main<br/>
-│   ├── backend.tf<br/>
-│   ├── ec2.tf<br/>
-│   ├── main.tf<br/>
-│   ├── securitygroup.tf<br/>
-│   ├── terraform.tfvars<br/>
-│   └── variables.tf<br/>
-└── modules<br/>
-    └── backend<br/>
-        ├── main.tf<br/>
-        └── variables.tf<br/>
-
 
 #### git repository
 https://github.com/natanbs/Jenkins-Terraform
