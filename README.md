@@ -123,8 +123,8 @@ Managing a couple or a few such envs would be easy. What happens if you have ten
 - Terraform<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform.png" width="800" /><br>
 
-Terraform plugin installation:
-Manage Jenkins > Global Tool Configuration > Terraform
+Terraform plugin installation:<br>
+Manage Jenkins > Global Tool Configuration > Terraform<br>
 
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform2.png" width="800" /><br>
 
