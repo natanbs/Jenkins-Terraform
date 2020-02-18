@@ -44,13 +44,13 @@ The key-pairs and the terrform's apply output are stored in the Jenkins artifact
 For this post you could use the free AWS account. The EC2s are created with the free t2.micro servers. 
 
 Requirements:
-Terraform, Jenkins and AWS basic knowledge.<br>
-<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS credentials</a><br>
-AWS cli
-Terraform cli
-Jenkins plugins: 
-- CloudBees AWS Credentials
-- Terraform
+- Terraform, Jenkins and AWS basic knowledge.<br>
+- <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS credentials</a><br>
+- AWS cli
+- Terraform cli
+- Jenkins plugins: 
+  - CloudBees AWS Credentials
+  - Terraform
 
 The project's terraform file structure includes 3 folders:
 - base: Initialize the project - Declare the profile, region, operators, bucket and dynamodb table. 
