@@ -195,7 +195,8 @@ The Jenkinsfile code is composed of the following major contexts:
   - Terraform destroy
 - Email notification
 
-The full Jenkinsfile is of cource in the git repoository above.
+The full Jenkinsfile is of cource in the git repoository above. 
+The major context will be elaborated bellow:
 
 #### The terraform command function
 The following tfCmd command is the terraform command that is executed in each action:
