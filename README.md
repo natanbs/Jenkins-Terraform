@@ -241,7 +241,6 @@ Parameters
 			   defaultValue: 'natanb@tikalk.com',
 			   description: 'Optional. Email notification')
     }
-...
 ```
 Checkout & Environment Prep
 AWS Access credentials:
@@ -254,7 +253,6 @@ AWS Access credentials:
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
             credentialsId: 'larobot-aws-credentials',
             ]])
-...
 ```
 Setting Terraform:
 - tool name: 'terraform-0.12.20     - Terraform version from the terraform plugin configuration above.
@@ -278,8 +276,7 @@ Setting AWS credentials:
                 mkdir -p /home/jenkins/.terraform.d/plugins/linux_amd64
             """)
             tfCmd('version')
-    }
-... 
+    } 
 ```
 
 Action 'plan':
@@ -294,7 +291,6 @@ If 'apply' is selected, it will previously run a 'plan' and will use it's tfplan
 						environment name: 'ACTION', value: 'apply'
 					}
 				}
-...
 ```
 
 Action 'plan' command:
@@ -314,13 +310,13 @@ Credentials are set as above.
 						environment name: 'ACTION', value: 'apply'
 					}
 				}
-...
+
 ```
 Action 'apply' command:
 Simple command: will run: terrform apply tfplan
 ```
         tfCmd('apply', 'tfplan')
-...
+
 ```
 
 Artifacts:
@@ -334,7 +330,6 @@ Once action 'apply' is performed and the env is created, the following artifacts
 					archiveArtifacts artifacts: "keys/key-${ENV_NAME}.*", fingerprint: true
 					archiveArtifacts artifacts: "main/show-${ENV_NAME}.txt", fingerprint: true
 				}
-...
 ```
 
 Action 'destroy':
@@ -348,7 +343,6 @@ Credentials are set as above.
 						environment name: 'ACTION', value: 'destroy';
 					}
 				}
-...
 				script {
 					def IS_APPROVED = input(
 						message: "Destroy ${ENV_NAME} !?!",
@@ -368,7 +362,6 @@ Action 'destroy' command:
 Simple command: will run: terrform destroy without prompting.
 ```
         tfCmd('destroy', '-auto-approve')
-...
 ```
 
 Once the job is complete, a notification email is sent with the following details:
