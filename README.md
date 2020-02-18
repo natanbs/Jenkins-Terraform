@@ -241,6 +241,7 @@ Parameters
 			   defaultValue: 'natanb@tikalk.com',
 			   description: 'Optional. Email notification')
     }
+...
 ```
 Checkout & Environment Prep
 AWS Access credentials:
@@ -253,9 +254,14 @@ AWS Access credentials:
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
             credentialsId: 'larobot-aws-credentials',
             ]])
+...
 ```
 Setting Terraform:
-- tool name: 'terraform-0.12.20     - Terraform version from the terraform plugin.
+- tool name: 'terraform-0.12.20     - Terraform version from the terraform plugin configuration above.
+
+Setting AWS credentials:
+- aws configure
+  - Set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION and PROFILE before each run
 ```
     {
         echo "Setting up Terraform"
@@ -272,5 +278,125 @@ Setting Terraform:
                 mkdir -p /home/jenkins/.terraform.d/plugins/linux_amd64
             """)
             tfCmd('version')
-    } 
+    }
+... 
 ```
+
+Action 'plan':
+To run only when the action 'plan' or 'apply' are selected. 
+Credentials are set as above.
+If 'apply' is selected, it will previously run a 'plan' and will use it's tfplan output file.  
+```
+        stage('terraform plan') {
+			when { anyOf
+					{
+						environment name: 'ACTION', value: 'plan';
+						environment name: 'ACTION', value: 'apply'
+					}
+				}
+...
+```
+
+Action 'plan' command:
+Will run with the command: 'plan' and options: '-detailed-exitcode -out=tfplan'
+Will create a tfplan file to be used by the 'apply'.
+```
+        tfCmd('plan', '-detailed-exitcode -out=tfplan')
+```
+
+Action 'apply':
+To run only when action 'apply' is selected.
+Credentials are set as above.
+```
+		stage('terraform apply') {
+			when { anyOf
+					{
+						environment name: 'ACTION', value: 'apply'
+					}
+				}
+...
+```
+Action 'apply' command:
+Simple command: will run: terrform apply tfplan
+```
+        tfCmd('apply', 'tfplan')
+...
+```
+
+Artifacts:
+Once action 'apply' is performed and the env is created, the following artifacts will be saved:
+- Key pairs of the EC2s
+- Output report of the current state
+
+```
+			post {
+				always {
+					archiveArtifacts artifacts: "keys/key-${ENV_NAME}.*", fingerprint: true
+					archiveArtifacts artifacts: "main/show-${ENV_NAME}.txt", fingerprint: true
+				}
+...
+```
+
+Action 'destroy':
+To run only when action 'destroy' is selected.
+If action 'destroy' is selected, a confirmation will be prompt to confirm the deletion of the env.
+Credentials are set as above.
+```
+		stage('terraform destroy') {    
+			when { anyOf
+					{
+						environment name: 'ACTION', value: 'destroy';
+					}
+				}
+...
+				script {
+					def IS_APPROVED = input(
+						message: "Destroy ${ENV_NAME} !?!",
+						ok: "Yes",
+						parameters: [
+							string(name: 'IS_APPROVED', defaultValue: 'No', description: 'Think again!!!')
+						]
+					)
+					if (IS_APPROVED != 'Yes') {
+						currentBuild.result = "ABORTED"
+						error "User cancelled"
+					}
+				}
+```
+
+Action 'destroy' command:
+Simple command: will run: terrform destroy without prompting.
+```
+        tfCmd('destroy', '-auto-approve')
+...
+```
+
+Once the job is complete, a notification email is sent with the following details:
+- Env (Terraform workspace)
+- Job name and number
+- Action performed
+- Region
+```
+  post
+    {
+			always{
+			emailext (
+			body: """
+				<p>${ENV_NAME} - Jenkins Pipeline ${ACTION} Summary</p>
+				<p>Jenkins url: <a href='${env.BUILD_URL}/>link</a></p>
+				<p>Pipeline Blueocean： <a href='${env.JENKINS_URL}blue/organizations/jenkins/${env.JOB_NAME}/detail/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline'>${env.JOB_NAME}(pipeline page)</a></p>
+			${env.JENKINS_URL}blue/organizations/jenkins/${env.JOB_NAME}/detail/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline
+				<ul>
+				<li> Branch built: '${env.BRANCH_NAME}' </li>
+				<li> ACTION: $ACTION</li>
+				<li> REGION: ${AWS_REGION}</li>
+				</ul>
+				""",
+				recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+				to: "${EMAIL}",
+				subject: "[${ENV_NAME}] - ${env.JOB_NAME}-${env.BUILD_NUMBER} [$AWS_REGION][$ACTION]",
+				attachLog: true
+				)
+        }
+    }
+    ```
