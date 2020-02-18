@@ -85,18 +85,22 @@ Default region name [eu-central-1]:<br/>
 Default output format [text]:<br/>
 
 #### Initiate the project:
-cd base<br/>
-terraform init<br/>
-terraform plan<br/>
-terraform apply // Run only once.<br/>
-
+The base init stage will prepare the S3 bucket
+```
+cd base
+terraform init
+terraform plan
+terraform apply
+```
 Create an env:<br/>
-cd main<br/>
-terraform workspace new tf-customer1  // Will create and select the tf-customer1 env. Now on all the actions will be performed in this env.<br/>
-terraform init                        // Downloads and installs all the required modules for this project.<br/>
-terraform plan                        // Show which components terraform will create or update with once applied in AWS.<br/>
-terraform apply                       // Will perform all the actions shown in the plan.<br/>
-terraform destroy                     // Once you don't need the env anymore this command will remove all the installed components.<br/> 
+```
+cd main
+terraform workspace new tf-customer1  # Will create and select the tf-customer1 env. Now on all the actions will be performed in this env.
+terraform init                        # Downloads and installs all the required modules for this project.
+terraform plan                        # Show which components terraform will create or update with once applied in AWS.
+terraform apply                       # Will perform all the actions shown in the plan.
+terraform destroy                     # Once you don't need the env anymore this command will remove all the installed components. 
+```
 
 #### Created components:
 Once teraform is applied, you will be able to find in the AWS console all the components created:<br/>
