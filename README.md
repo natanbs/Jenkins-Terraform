@@ -163,6 +163,11 @@ Set the Git for the Pipeline:<br>
 Script Path: Jenkinsfile <br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline5.png" /><br>
 
+#### Setting AWS Credentials
+To configure the AWS Credentials:
+- Install the CloudBees AWS Credentials plugin
+- Settings: Manage Jenkins > Configure System > Global properties
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/AWS_credentials.png" width="800" /><br>
 
 
 #### Declartive Pipelines 
@@ -178,5 +183,5 @@ def tfCmd(String command, String options = '') {
 	sh ( script: "echo ${command} ${options} && cd $WORKSPACE/main && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt", returnStatus: true)
 }
 ```
-
+ACCESS - Supports multiple AWS credentials profiles, taken from the parameters when running the build. 
  
