@@ -176,7 +176,7 @@ To configure the AWS Credentials:
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/AWS_credentials.png" width="800" /><br>
 
 ### The Pipeline
-#### Declartive Pipelines 
+#### Jenkinsfile - Declartive Pipelines 
 The declerative pipeline is a relative new Jenkins features using the Jenkinsfile to supports Pipeline as a code concept based on groovy. However basic scripting knowledge is sufficient to understand the script. 
 
 The Jenkinsfile code is composed of the following major contexts:
