@@ -139,7 +139,8 @@ We are ready to proceed to set the job<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node4.png" /><br>
 
 #### Job settings
-Create a Pipeline job
+Create a Pipeline job<br>
+
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline1.png" /><br>
 Select:
 - Do not allow concurrent builds
@@ -149,10 +150,10 @@ Select:
 To add parameters, Select:
 - This project is parameterized<br>
   Add choice parameter: AWS_REGION and add your regions (can have one or multiple).<br>
-<br>
+
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline2.png" /><br>
   Add string parameter: ENV_NAME - This will represent the environemnt / workspace / customer.<br>
-  Add choice parameter: ACTION and add plan, apply and destroy - These are the actions Jenkins will trigger Terraform. <br>
+  Add choice parameter: ACTION and add plan, apply and destroy - These are the actions Jenkins will trigger Terraform. <br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline3.png" /><br>
   Add string parameter: PROFILE which is the AWS credential profile.<br>
   Add string parameter: EMAIL with the emails or mailing list to the admins.<br>
