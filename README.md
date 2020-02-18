@@ -44,9 +44,9 @@ The key-pairs and the terrform's apply output are stored in the Jenkins artifact
 For this post you could use the free AWS account. The EC2s are created with the free t2.micro servers. 
 
 Requirements:
-- Terraform, Jenkins and AWS basic knowledge.<br>
-- <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS cli and credentials</a><br>
-- <a href="https://learn.hashicorp.com/terraform/getting-started/install.html">Terraform cli</a>
+- Terraform, Jenkins and AWS basic knowledge.
+- <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS cli and credentials</a>
+- <a href="https://learn.hashicorp.com/terraform/getting-started/install.html">Terraform cli
 - Jenkins plugins: 
   - CloudBees AWS Credentials
   - Terraform
@@ -182,5 +182,11 @@ def tfCmd(String command, String options = '') {
 	sh ( script: "echo ${command} ${options} && cd $WORKSPACE/main && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt", returnStatus: true)
 }
 ```
-ACCESS - Supports multiple AWS credentials profiles, taken from the parameters when running the build. 
+Note - Do not confuse between Jenkins and Terraform workspace:
+- Jenkins workspace is the directory where the job is running.
+- Terraform workspace is the environment created.
+
+ACCESS - Provide the AWS credentials profile to be used, taken from the PROFILE parameter when running the build. 
+Terraform init - Performed both in the base ands mail directories with each run since to make sure the env is updated as the job can be run by other users on other slaves.
+Environment - The environemt (Terraforn workspace) that will be created 
  
