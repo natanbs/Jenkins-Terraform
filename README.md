@@ -165,5 +165,18 @@ Script Path: Jenkinsfile <br>
 
 
 
-Using declartive Jenkinsfile. 
+#### Declartive Pipelines 
+The declerative pipeline is a relative new Jenkins features using the Jenkinsfile to supports Pipeline as a code concept based on groovy. However basic scripting knowledge is sufficient to understand the script. 
 
+The following is the terraform command that is executed in each stage:
+```
+def tfCmd(String command, String options = '') {
+	ACCESS = "export AWS_PROFILE=${PROFILE} && export TF_ENV_profile=${PROFILE}"
+	sh ("cd $WORKSPACE/main && ${ACCESS} && terraform init") // main
+	sh ("cd $WORKSPACE/base && ${ACCESS} && terraform init") // base
+	sh ( "cd $WORKSPACE/main && terraform workspace select ${ENV_NAME} || terraform workspace new ${ENV_NAME}" )
+	sh ( script: "echo ${command} ${options} && cd $WORKSPACE/main && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt", returnStatus: true)
+}
+```
+
+ 
