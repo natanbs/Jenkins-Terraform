@@ -45,7 +45,7 @@ For this post you could use the free AWS account. The EC2s are created with the 
 
 Requirements:
 Terraform, Jenkins and AWS basic knowledge.
-AWS credentials
+<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS credentials</a>
 AWS cli
 Terraform cli
 Jenkins plugins: 
