@@ -175,10 +175,25 @@ To configure the AWS Credentials:
 - Settings: Manage Jenkins > Configure System > Global properties
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/AWS_credentials.png" width="800" /><br>
 
-
+### The Pipeline
 #### Declartive Pipelines 
 The declerative pipeline is a relative new Jenkins features using the Jenkinsfile to supports Pipeline as a code concept based on groovy. However basic scripting knowledge is sufficient to understand the script. 
 
+The Jenkinsfile code is composed of the following major contexts:
+- The terraform command function
+- Pipeline settings: Selected slave and job's parameters to run.
+- Checkout & Environment Preparations:
+  - AWS access
+  - Terraform settings
+- Actions:
+  - Terraform plan
+  - Terraform apply
+  - Terraform destroy
+- Email notification
+
+The full Jenkinsfile is of cource in the git repoository above.
+
+#### The terraform command function
 The following tfCmd command is the terraform command that is executed in each action:
 The tfCmd parameters are 'command' and 'options':
 - command: The terraform action (init/plan/apply/destroy)
@@ -208,9 +223,7 @@ Terraform init - Performed both in the base ands main directories with each run 
 Environment - The environemt (Terraforn workspace) that will be created (qa/dev/prod etc or customer name or any type of env).
 Terraform show - Is perform after each command and outputs the current state to a file. This file is saved in the artifact if the action was 'apply'.
 
-#### The Pipeline:
-For the full file, see the Junkfile in the git.
-
+#### Pipeline settings
 agent - The slave's lable.
 ```
 pipeline {
@@ -242,7 +255,7 @@ Parameters
 			   description: 'Optional. Email notification')
     }
 ```
-Checkout & Environment Prep
+#### Checkout & Environment Preparations
 AWS Access credentials:
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
@@ -278,8 +291,8 @@ Setting AWS credentials:
             tfCmd('version')
     } 
 ```
-
-Action 'plan':
+#### Actions
+##### Action 'plan':
 To run only when the action 'plan' or 'apply' are selected. 
 Credentials are set as above.
 If 'apply' is selected, it will previously run a 'plan' and will use it's tfplan output file.  
@@ -300,7 +313,7 @@ Will create a tfplan file to be used by the 'apply'.
         tfCmd('plan', '-detailed-exitcode -out=tfplan')
 ```
 
-Action 'apply':
+##### Action 'apply':
 To run only when action 'apply' is selected.
 Credentials are set as above.
 ```
@@ -332,7 +345,7 @@ Once action 'apply' is performed and the env is created, the following artifacts
 				}
 ```
 
-Action 'destroy':
+##### Action 'destroy':
 To run only when action 'destroy' is selected.
 If action 'destroy' is selected, a confirmation will be prompt to confirm the deletion of the env.
 Credentials are set as above.
@@ -364,6 +377,7 @@ Simple command: will run: terrform destroy without prompting.
         tfCmd('destroy', '-auto-approve')
 ```
 
+#### Email notification
 Once the job is complete, a notification email is sent with the following details:
 - Env (Terraform workspace)
 - Job name and number
