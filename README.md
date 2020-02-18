@@ -71,7 +71,7 @@ The procedure to run the terraform code:
 
 #### Set your AWS credentials:
 
-vi ~/.aws/credentials<br/>
+cat ~/.aws/credentials<br/>
 Example output:<br/>
 [tikal]<br/>
 aws_access_key_id = ***************OUEU<br/>
@@ -122,6 +122,9 @@ Managing a couple or a few such envs would be easy. What happens if you have ten
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_AWS_Credentials.png" width="800" /><br>
 - Terraform<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform.png" width="800" /><br>
+Terraform plugin installation:
+Manage Jenkins > Global Tool Configuration > Terraform
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform2.png" width="800" /><br>
 
 #### Node installation
 Create a permanent node:
@@ -172,21 +175,98 @@ To configure the AWS Credentials:
 #### Declartive Pipelines 
 The declerative pipeline is a relative new Jenkins features using the Jenkinsfile to supports Pipeline as a code concept based on groovy. However basic scripting knowledge is sufficient to understand the script. 
 
-The following is the terraform command that is executed in each stage:
+The following tfCmd command is the terraform command that is executed in each action:
+The tfCmd parameters are 'command' and 'options':
+- command: The terraform action (init/plan/apply/destroy)
+- options: The terraform required options like the output file etc.
+
+Note: Do not confuse between Jenkins and Terraform workspace:
+- Jenkins workspace is the Jenkins directory where the job is running.
+- Terraform workspace is the environment created.
+
 ```
 def tfCmd(String command, String options = '') {
 	ACCESS = "export AWS_PROFILE=${PROFILE} && export TF_ENV_profile=${PROFILE}"
-	sh ("cd $WORKSPACE/main && ${ACCESS} && terraform init") // main
 	sh ("cd $WORKSPACE/base && ${ACCESS} && terraform init") // base
+	sh ("cd $WORKSPACE/main && ${ACCESS} && terraform init") // main
 	sh ( "cd $WORKSPACE/main && terraform workspace select ${ENV_NAME} || terraform workspace new ${ENV_NAME}" )
 	sh ( script: "echo ${command} ${options} && cd $WORKSPACE/main && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt", returnStatus: true)
 }
 ```
-Note - Do not confuse between Jenkins and Terraform workspace:
-- Jenkins workspace is the directory where the job is running.
-- Terraform workspace is the environment created.
 
-ACCESS - Provide the AWS credentials profile to be used, taken from the PROFILE parameter when running the build. 
-Terraform init - Performed both in the base ands mail directories with each run since to make sure the env is updated as the job can be run by other users on other slaves.
-Environment - The environemt (Terraforn workspace) that will be created 
+
+The following parameters are set with each run (tfCmd) since the jobs can be run each time for a different env:
+- WORKSPACE - Junkins workspace
+- ENV_NAME  - Terraform workspace (env) each time the command is run, jenkins ($WORKSPACE) and terraform ($ENV_NAME) workspace are selected and terraform init is run in the base and main folders.
+- ACCESS    - The AWS credentials profile to be used, taken from the PROFILE parameter when running the build and it's settings shown above.
  
+Terraform init - Performed both in the base ands main directories with each run since to make sure the env is updated as the job can be run by other users on other slaves.
+Environment - The environemt (Terraforn workspace) that will be created (qa/dev/prod etc or customer name or any type of env).
+Terraform show - Is perform after each command and outputs the current state to a file. This file is saved in the artifact if the action was 'apply'.
+
+#### The Pipeline:
+For the full file, see the Junkfile in the git.
+
+agent - The slave's lable.
+```
+pipeline {
+  agent { node { label 'tf-slave' } }
+``` 
+
+Parameters
+- AWS_REGION (choice): The job supports multiple AWS regions. 
+- ENV_NAME   (string): The created env (Terraform workspace).
+- ACTION     (choice): The terraform action to perform (plan/apply/destroy)
+- EMAIL      (string): Emails or mailing lists for notification.  
+```
+	parameters {
+
+		choice (name: 'AWS_REGION',
+				choices: ['eu-central-1','us-west-1', 'us-west-2'],
+				description: 'Pick A regions defaults to eu-central-1')
+		string (name: 'ENV_NAME',
+			   defaultValue: 'tf-customer1',
+			   description: 'Env or Customer name')
+		choice (name: 'ACTION',
+				choices: [ 'plan', 'apply', 'destroy'],
+				description: 'Run terraform plan / apply / destroy')
+		string (name: 'PROFILE',
+			   defaultValue: 'tikal',
+			   description: 'Optional. Target aws profile defaults to tikal')
+		string (name: 'EMAIL',
+			   defaultValue: 'natanb@tikalk.com',
+			   description: 'Optional. Email notification')
+    }
+```
+Checkout & Environment Prep
+AWS Access credentials:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+
+```
+        [ $class: 'AmazonWebServicesCredentialsBinding',
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+            credentialsId: 'larobot-aws-credentials',
+            ]])
+```
+Setting Terraform:
+- tool name: 'terraform-0.12.20     - Terraform version from the terraform plugin.
+```
+    {
+        echo "Setting up Terraform"
+        def tfHome = tool name: 'terraform-0.12.20',
+            type: 'org.jenkinsci.plugins.terraform.TerraformInstallation'
+            env.PATH = "${tfHome}:${env.PATH}"
+            currentBuild.displayName += "[$AWS_REGION]::[$ACTION]"
+            sh("""
+                /usr/local/bin/aws configure --profile ${PROFILE} set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+                /usr/local/bin/aws configure --profile ${PROFILE} set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+                /usr/local/bin/aws configure --profile ${PROFILE} set region ${AWS_REGION}
+                export AWS_PROFILE=${PROFILE}
+                export TF_ENV_profile=${PROFILE}
+                mkdir -p /home/jenkins/.terraform.d/plugins/linux_amd64
+            """)
+            tfCmd('version')
+    } 
+```
