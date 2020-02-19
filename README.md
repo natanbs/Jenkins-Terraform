@@ -13,34 +13,34 @@ Once provided with the credentials, region, and the required resources, it will 
 Basic Terraform concepts are explained to understand the project's workflow:
 
 #### Terraform env:
-An infrastructure created by terraforrm code. In this project it is just one VPC and a couple of EC2s. But iot could be a very complex infrastructure of many VPCs, EC2s,RDS, loadbalancing, peering, transit gateway, route53 etc.
+An infrastructure created by terraforrm code. In this project it is just one VPC and a couple of EC2s. But it could be a very complex infrastructure of many VPCs, EC2s,RDS, load-balancing, peering, transit gateway, route53 etc.
 
 #### Terraform init:
 Prior to running the code, terraform checks for all the required components needed for the implementation like aws client (It will use it's own), any 3rd party modules like key-pair in this project etc. 
-The required components are installed onder the folder .terraform. If any new modeles are installed that require new installations, terrform init would have to be run again.
+The required components are installed in order the folder .terraform. If any new modules are installed that require new installations, terraform init would have to be run again.
 
 #### Terraform Plan:
 Terraform would read all the requirements from the code and compare with the reality in the cloud and would provide a report of the plan.
-If it is a new env, it would most like to create from scratch everything from the code. Once the envc was created and a new resource was added or deleted in the code, obviosly terraform will not create the env from scratch. The terraform plan will provide a report of which components it will add or remove according to the comparison between the requirements in the code the the existing infrastructure in the cloud.
+If it is a new env, it would most like to create from scratch everything from the code. Once the env was created and a new resource was added or deleted in the code, obviously terraform will not create the env from scratch. The terraform plan will provide a report of which components it will add or remove according to the comparison between the requirements in the code the the existing infrastructure in the cloud.
 
 #### Terraform state:
-The teraform state if the core of terraform logic. Once terraform compares the requirements in the code vs reality in the cloud, it creates a tfstate file.
-The tfstate file is critical as it contains the current state of the infrastructure. Without this file, or in case this file (and it's  backup) is currupted, terraform will not be able to proceed.
+The terraform state if the core of terraform logic. Once terraform compares the requirements in the code vs reality in the cloud, it creates a tfstate file.
+The tfstate file is critical as it contains the current state of the infrastructure. Without this file, or in case this file (and its  backup) is corrupted, terraform will not be able to proceed.
 
 #### Cloud bucket:
-So having the tfstate file locally is fine as long as you have one admin. But what if there are more admins? They will not be able to use the local tfstate file of the first admin, hence they will not be able to make any changes to ther env.
-Terraform supports using buckets (S3 in AWS) to mainten the tfstate file in the cloud which allows each admin to access. Terraform would maintain the tfstate in a dedicated Database (DynamoDB in AWS) and manage the lock, which will not allow an admin to run terraform to an env that is currently being handled. Any admin would be able to maintain the env as long as the tfstate in not locked.
+So having the tfstate file locally is fine as long as you have one admin. But what if there are more admins? They will not be able to use the local tfstate file of the first admin, hence they will not be able to make any changes to the env.
+Terraform supports using buckets (S3 in AWS) to maintain the tfstate file in the cloud which allows each admin to access. Terraform would maintain the tfstate in a dedicated Database (DynamoDB in AWS) and manage the lock, which will not allow an admin to run terraform to an env that is currently being handled. Any admin would be able to maintain the env as long as the tfstate in not locked.
 
 #### Terraform workspaces.
-So having the tfstate in the cloud is great if you have one env, for example a development infrastructure. A second env would require a separate set of code in another folder and another bucket in the cloud. Not because you can't use variables, butr because they canniot share the tfstate file. 
-The solution would be to use the terraform workspaces which would create a terraform.tfstate.d folder and each env would have it's own folder where the tfstate file is maintained locally. Similarily in the cloud, there would be an env: folder in the bucket with a folder per env where it's tfstate file would be held. 
+So having the tfstate in the cloud is great if you have one env, for example a development infrastructure. A second env would require a separate set of code in another folder and another bucket in the cloud. Not because you can't use variables, but because they cannot share the tfstate file. 
+The solution would be to use the terraform workspaces which would create a terraform.tfstate.d folder and each env would have its own folder where the tfstate file is maintained locally. Similarly in the cloud, there would be an env: folder in the bucket with a folder per env where its tfstate file would be held. 
 The cloud DB (DynamoDB in AWS) would have a table for the project with one item per env.
 Terraform workspaces allows to easily switch between envs on the fly, which will allow in our project to run the same job on different envs per demand. 
 
 #### Getting to business:
 In this post we will use AWS, create a VPC with a couple of servers. 
-Each Jenkins job would be able create, apply or destroy ther env's vpc and its dependencies. 
-The key-pairs and the terrform's apply output are stored in the Jenkins artifacts for refernace.
+Each Jenkins job would be able create, apply or destroy the env's vpc and its dependencies. 
+The key-pairs and the terrform's apply output are stored in the Jenkins artifacts for refernece.
 
 For this post you could use the free AWS account. The EC2s are created with the free t2.micro servers. 
 
@@ -53,10 +53,10 @@ Requirements:
   - Terraform
 
 The project's terraform file structure includes 3 folders:
-- base: Initialize the project - Declare the profile, region, operators, bucket and dynamodb table. 
+- base: Initialise the project - Declare the profile, region, operators, bucket and DynamoDB table. 
   Needs to be applied once before creating the envs. When changing between the envs, the base init should be performed.
   Uses the modules/backend/main module.
-- main: Created the env - VPC, Security goups, a couple of EC2s (and thier key-pairs)
+- main: Created the env - VPC, Security groups, a couple of EC2s (and their key-pairs)
 - modules: Implement the base initialization.
 
 Jenkins would create / update or destroy and infrastructure you have created with terraform. In this example we used the basic of a couple of EC2s.
