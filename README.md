@@ -277,6 +277,8 @@ Parameters
 AWS Access credentials:
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
+- credentialsId: Taken from Jenkins 
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/AWS_access_Jenkins2.png" width="800" /><br>
 
 ```
         [ $class: 'AmazonWebServicesCredentialsBinding',
