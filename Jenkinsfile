@@ -48,7 +48,7 @@ pipeline {
 							[ $class: 'AmazonWebServicesCredentialsBinding',
 								accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 								secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-								credentialsId: 'larobot-aws-credentials',
+								credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
 								]])
 							{
 							try {
@@ -90,11 +90,11 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'larobot-aws-credentials',
+									credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
 									]])
 								{
 								try {
-									tfCmd('plan', '-detailed-exitcode -out=tfplan && echo $?')
+									tfCmd('plan', '-detailed-exitcode -out=tfplan')
 								} catch (ex) {
 									if (ex == 2 && "${ACTION}" == 'apply') {
 										currentBuild.result = "UNSTABLE"
@@ -124,7 +124,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'larobot-aws-credentials',
+									credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
 									]])
 								{
 								try {
@@ -171,7 +171,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'larobot-aws-credentials',
+									credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
 									]])
 								{
 								try {
