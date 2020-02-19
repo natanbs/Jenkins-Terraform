@@ -48,7 +48,7 @@ pipeline {
 							[ $class: 'AmazonWebServicesCredentialsBinding',
 								accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 								secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-								credentialsId: '9bfce4b6-ba4c-420c-9473-9fec3cab319c',
+								credentialsId: 'Github',
 								]])
 							{
 							try {
@@ -90,7 +90,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: '9bfce4b6-ba4c-420c-9473-9fec3cab319c',
+									credentialsId: 'Github',
 									]])
 								{
 								try {
@@ -124,7 +124,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: '9bfce4b6-ba4c-420c-9473-9fec3cab319c',
+									credentialsId: 'Github',
 									]])
 								{
 								try {
@@ -171,7 +171,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: '9bfce4b6-ba4c-420c-9473-9fec3cab319c',
+									credentialsId: 'Github',
 									]])
 								{
 								try {
