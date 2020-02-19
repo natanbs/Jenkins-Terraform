@@ -2,8 +2,9 @@
 
 ## Dynamically manage and maintain multiple Terraform environment lifecycles with Jenkins.
 
+https://github.com/natanbs/Jenkins-Terraform
 
-In this post, we will demonstrate how multiple Terraform lifecycle infrastructures can be easily and dynamically managed and maintained per envromnment with Jenkings.
+In this post, we will demonstrate how multiple Terraform lifecycle infrastructures can be easily and dynamically managed and maintained per environment with Jenkins.
 
 ### Terraform:
 Terraform introduces infrastructure as a code and provides the ability to create, update and destroy any kind of component and environemt infrastructures in the cloud.
@@ -138,9 +139,9 @@ Manage Jenkins > Global Tool Configuration > Terraform<br>
 #### Node installation
 Create a permanent node:
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node1.png" /><br>
-This agent is configured with ssh launch method, however any method preferred.<br><br>
+This agent is configured with ssh launch method, however any prefered method can be used.<br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node2.png" /><br>
-Use jenkins user and paste its public key.<br><br>
+Add a jenkins user and paste its public key.<br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node3.png" /><br>
 We are ready to proceed to set the job<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node4.png" /><br>
