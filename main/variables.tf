@@ -8,7 +8,7 @@ variable "region" {
 
 variable "vendor_name" {
   description = "Usually the org/company name"
-  default     = "Cyberx"
+  default     = "Tikal"
 }
 
 variable "profile" {
