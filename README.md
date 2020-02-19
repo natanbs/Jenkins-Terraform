@@ -129,6 +129,9 @@ Managing a couple or a few such envs would be easy. What happens if you have ten
 
 Terraform plugin installation:<br>
 Manage Jenkins > Global Tool Configuration > Terraform<br>
+- Setting Terraform:
+  Terraform Name: 'terraform-0.12.20.
+  Version: Terraform 0.12.20 linux (amd64)   - Notice the OS and platform.
 
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Plugin_Terraform2.png" width="800" /><br>
 
