@@ -10,7 +10,7 @@ In this post, we will demonstrate how multiple Terraform lifecycle infrastructur
 Terraform introduces infrastructure as a code and provides the ability to create, update and destroy any kind of component and environemt infrastructures in the cloud.
 Once provided with the credentials, region, and the required resources, it will be able to create the requested infrastructure. 
 
-Basic Terraform concepts are explained to understand the projent's workflow:
+Basic Terraform concepts are explained to understand the project's workflow:
 
 #### Terraform env:
 An infrastructure created by terraforrm code. In this project it is just one VPC and a couple of EC2s. But iot could be a very complex infrastructure of many VPCs, EC2s,RDS, loadbalancing, peering, transit gateway, route53 etc.
