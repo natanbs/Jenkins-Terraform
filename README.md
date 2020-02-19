@@ -179,6 +179,14 @@ To configure the AWS Credentials:
 - Settings: Manage Jenkins > Configure System > Global properties
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/AWS_credentials.png" width="800" /><br>
 
+#### Setting AWS access to Jenkins Credentials
+To add AWS access to the Jenkins credentials:
+- Credentials > System > 	Global credentials (unrestricted) > Add Credentials
+- Kind: AWS Credentials
+- ID: The Credentialid used in Jenkinsfile, give it a meaningful name.
+<img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/AWS_access_Jenkins.png" width="800" /><br>
+
+
 #### Email settings
 To set the email notification parameters:
 - Settings: Manage Jenkins > Configure System > Extended E-mail Notification
