@@ -48,7 +48,7 @@ pipeline {
 							[ $class: 'AmazonWebServicesCredentialsBinding',
 								accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 								secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-								credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
+								credentialsId: 'dbee5c82-b482-4a3b-b2c8-4fd47c8c8ee4',
 								]])
 							{
 							try {
@@ -90,7 +90,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
+									credentialsId: 'dbee5c82-b482-4a3b-b2c8-4fd47c8c8ee4',
 									]])
 								{
 								try {
@@ -124,7 +124,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
+									credentialsId: 'dbee5c82-b482-4a3b-b2c8-4fd47c8c8ee4',
 									]])
 								{
 								try {
@@ -171,7 +171,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'l46273ea8-52f0-4a2d-9501-bd93a733ca74',
+									credentialsId: 'dbee5c82-b482-4a3b-b2c8-4fd47c8c8ee4',
 									]])
 								{
 								try {
