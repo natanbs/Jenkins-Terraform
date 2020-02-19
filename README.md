@@ -282,7 +282,7 @@ AWS Access credentials:
         [ $class: 'AmazonWebServicesCredentialsBinding',
             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-            credentialsId: 'larobot-aws-credentials',
+            credentialsId: 'Tikal-AWS-access',
             ]])
 ```
 Setting Terraform:
