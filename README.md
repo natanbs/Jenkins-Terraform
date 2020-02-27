@@ -7,13 +7,13 @@ https://github.com/natanbs/Jenkins-Terraform
 In this post, we will demonstrate how multiple Terraform lifecycle infrastructures can be easily and dynamically managed and maintained per environment with Jenkins.
 
 ### Terraform:
-Terraform introduces infrastructure as a code and provides the ability to create, update and destroy any kind of component and environemt infrastructures in the cloud.
+Terraform introduces infrastructure as a code and provides the ability to create, update and destroy any kind of component and environment infrastructures in the cloud.
 Once provided with the credentials, region, and the required resources, it will be able to create the requested infrastructure. 
 
 Basic Terraform concepts are explained to understand the project's workflow:
 
 #### Terraform env:
-An infrastructure created by terraforrm code. In this project it is just one VPC and a couple of EC2s. But it could be a very complex infrastructure of many VPCs, EC2s,RDS, load-balancing, peering, transit gateway, route53 etc.
+An infrastructure created by terraform code. In this project it is just one VPC and a couple of EC2s. But it could be a very complex infrastructure of many VPCs, EC2s,RDS, load-balancing, peering, transit gateway, route53 etc.
 
 #### Terraform init:
 Prior to running the code, terraform checks for all the required components needed for the implementation like aws client (It will use it's own), any 3rd party modules like key-pair in this project etc. 
@@ -40,7 +40,7 @@ Terraform workspaces allows to easily switch between envs on the fly, which will
 #### Getting to business:
 In this post we will use AWS, create a VPC with a couple of servers. 
 Each Jenkins job would be able create, apply or destroy the env's vpc and its dependencies. 
-The key-pairs and the terrform's apply output are stored in the Jenkins artifacts for refernece.
+The key-pairs and the terraform's apply output are stored in the Jenkins artifacts for reference.
 
 For this post you could use the free AWS account. The EC2s are created with the free t2.micro servers. 
 
@@ -57,9 +57,9 @@ The project's terraform file structure includes 3 folders:
   Needs to be applied once before creating the envs. When changing between the envs, the base init should be performed.
   Uses the modules/backend/main module.
 - main: Created the env - VPC, Security groups, a couple of EC2s (and their key-pairs)
-- modules: Implement the base initialization.
+- modules: Implement the base initialisation.
 
-Jenkins would create / update or destroy and infrastructure you have created with terraform. In this example we used the basic of a couple of EC2s.
+Jenkins would create / update or destroy any infrastructure you have created with terraform. In this example we used the basic of a couple of EC2s.
 
 The project's full structure: 
 
