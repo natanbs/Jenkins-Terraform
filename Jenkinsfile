@@ -1,17 +1,17 @@
 def tfCmd(String command, String options = '') {
 	ACCESS = "export AWS_PROFILE=${PROFILE} && export TF_ENV_profile=${PROFILE}"
-	sh ("cd $WORKSPACE/main \
-        && ${ACCESS} \
+	sh ("cd $WORKSPACE/main \\
+        && ${ACCESS} \\
         && terraform init") // Base
-	sh ("cd $WORKSPACE/base \
-        && ${ACCESS} \
+	sh ("cd $WORKSPACE/base \\
+        && ${ACCESS} \\
         && terraform init") // Main
-	sh ( "cd $WORKSPACE/main \
+	sh ( "cd $WORKSPACE/main \\
         && terraform workspace select ${ENV_NAME} || terraform workspace new ${ENV_NAME}" )
-	sh ( script: "echo ${command} ${options} && cd $WORKSPACE/main \ 
-        && ${ACCESS} \
-        && terraform init \
-        && terraform ${command} ${options} \
+	sh ( script: "echo ${command} ${options} && cd $WORKSPACE/main \\ 
+        && ${ACCESS} \\
+        && terraform init \\
+        && terraform ${command} ${options} \\
         && terraform show -no-color > show-${ENV_NAME}.txt", returnStatus: true)
 }
 
