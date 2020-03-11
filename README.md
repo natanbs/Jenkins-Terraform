@@ -88,23 +88,24 @@ Default output format [text]:<br/>
 #### Initiate the project:
 The base init stage will prepare the S3 bucket
 ```
-cd base
-terraform init
-terraform plan
-terraform apply
+$ cd base
+$ terraform init
+$ terraform plan
+$ terraform apply
 ```
-Create an env:<br/>
+
+#### The env's lifecyle - init, plan, apply, destroy:: 
 ```
 cd main
-terraform workspace new tf-customer1  # Will create and select the tf-customer1 env. Now on all the actions will be performed in this env.
+terraform workspace new tf-customer1  # Create and select the tf-customer1 env. All the actions will be performed in this env.
 terraform init                        # Downloads and installs all the required modules for this project.
 terraform plan                        # Show which components terraform will create or update with once applied in AWS.
-terraform apply                       # Will perform all the actions shown in the plan.
-terraform destroy                     # Once you don't need the env anymore this command will remove all the installed components. 
+terraform apply                       # Perform all the actions shown in the plan above.
+terraform destroy                     # Once the env is not needed anymore, the destroy command will remove all its installed components from AWS. 
 ```
 
 #### Created components:
-Once teraform is applied, you will be able to find in the AWS console all the components created:<br/>
+Once terraform is applied, you will be able to find in the AWS console all the components created:<br/>
 - S3 bucket (under env: you will find a folder per environment which will include the env's tfstate file)
 - Dynamodb table (which manages and maintains the tfstate files)
 - VPC
@@ -117,8 +118,8 @@ Once teraform is applied, you will be able to find in the AWS console all the co
 - Key-pairs
 - Network instances
 
-If you have cloned the git, have an AWS account and set the AWS credentials, yiu can instantly create new envs in AWS.
-Managing a couple or a few such envs would be easy. What happens if you have tens of envs? What if you have more than one 
+With the cloned git, an AWS account with the AWS credentials set, the env can be instantly create in AWS. 
+Managing a couple or a few such envs would be easy. What happens if you have tens of envs?
 
 
 ### Jenkins:
@@ -139,9 +140,9 @@ Manage Jenkins > Global Tool Configuration > Terraform<br>
 #### Node installation
 Create a permanent node:
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node1.png" /><br>
-This agent is configured with ssh launch method, however any prefered method can be used.<br><br>
+This agent is configured with ssh launch method, however any preferred method can be used.<br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node2.png" /><br>
-Add a jenkins user and paste its public key.<br><br>
+Add a jenkins user and paste its public key:<br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node3.png" /><br>
 We are ready to proceed to set the job<br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Node4.png" /><br>
@@ -160,7 +161,7 @@ To add parameters, Select:
   Add choice parameter: AWS_REGION and add your regions (can have one or multiple).<br>
 
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline2.png" /><br>
-  Add string parameter: ENV_NAME - This will represent the environemnt / workspace / customer.<br>
+  Add string parameter: ENV_NAME - This will represent the environment / workspace / customer.<br>
   Add choice parameter: ACTION and add 'plan', 'apply' and 'destroy' - These are the actions Jenkins will trigger Terraform. <br><br>
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Pipeline3.png" /><br>
   Add string parameter: PROFILE which is the AWS credential profile.<br>
@@ -212,7 +213,7 @@ The Jenkinsfile code is composed of the following major contexts:
   - Terraform destroy
 - Email notification
 
-The full Jenkinsfile is of cource in the git repoository above. 
+The full Jenkinsfile is of course in the git repository above. 
 The major context will be elaborated bellow:
 
 #### The terraform command function
@@ -221,7 +222,7 @@ The tfCmd parameters are 'command' and 'options':
 - command: The terraform action (init/plan/apply/destroy)
 - options: The terraform required options like the output file etc.
 
-Note: Do not confuse between Jenkins and Terraform workspace:
+Note: Do not confuse between Jenkins and Terraform workspaces:
 - Jenkins workspace is the Jenkins directory where the job is running.
 - Terraform workspace is the environment created.
 
@@ -242,11 +243,11 @@ The following parameters are set with each run (tfCmd) since the jobs can be run
 - ACCESS    - The AWS credentials profile to be used, taken from the PROFILE parameter when running the build and it's settings shown above.
  
 Terraform init - Performed both in the base ands main directories with each run since to make sure the env is updated as the job can be run by other users on other slaves.
-Environment - The environemt (Terraforn workspace) that will be created (qa/dev/prod etc or customer name or any type of env).
+Environment - The environment (Terraform workspace) that will be created (qa/dev/prod etc or customer name or any type of env).
 Terraform show - Is perform after each command and outputs the current state to a file. This file is saved in the artifact if the action was 'apply'.
 
 #### Pipeline settings
-agent - The slave's lable.
+agent - The slave's label.
 ```
 pipeline {
   agent { node { label 'tf-slave' } }
