@@ -99,9 +99,9 @@ $ terraform apply
 cd main
 terraform workspace new tf-customer1  # Create and select the tf-customer1 env. All the actions will be performed in this env.
 terraform init                        # Downloads and installs all the required modules for this project.
-terraform plan                        # Show which components terraform will create or update with once applied in AWS.
+terraform plan                        # Show the components terraform will create or update on AWS once applied with Terraform.
 terraform apply                       # Perform all the actions shown in the plan above.
-terraform destroy                     # Once the env is not needed anymore, the destroy command will remove all its installed components from AWS. 
+terraform destroy                     # Once the env is not needed anymore, the destroy command will remove all its installed components from AWS.
 ```
 
 #### Created components:
@@ -198,8 +198,8 @@ To set the email notification parameters:
 <img src="https://github.com/natanbs/Jenkins-Terraform/blob/master/screenshots/Email.png" /><br>
 
 ### The Pipeline
-#### Jenkinsfile - Declartive Pipelines 
-The declerative pipeline is a relative new Jenkins features using the Jenkinsfile to supports Pipeline as a code concept based on groovy. However basic scripting knowledge is sufficient to understand the script. 
+#### Jenkinsfile - Declarative Pipelines 
+The declarative pipeline is a relative new Jenkins features using the Jenkinsfile to supports Pipeline as a code concept based on groovy. However basic scripting knowledge is sufficient to understand the script.
 
 The Jenkinsfile code is composed of the following major contexts:
 - The terraform command function
@@ -249,8 +249,10 @@ Terraform show - Is perform after each command and outputs the current state to 
 #### Pipeline settings
 agent - The slave's label.
 ```
+
 pipeline {
   agent { node { label 'tf-slave' } }
+
 ``` 
 
 Parameters
