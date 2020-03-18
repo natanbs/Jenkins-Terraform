@@ -3,7 +3,7 @@ def tfCmd(String command, String options = '') {
 	sh ("cd $WORKSPACE/main && ${ACCESS} && terraform init") // main
 	sh ("cd $WORKSPACE/base && ${ACCESS} && terraform init") // base
 	sh ( "cd $WORKSPACE/main && terraform workspace select ${ENV_NAME} || terraform workspace new ${ENV_NAME}" )
-	sh ( script: "echo ${command} ${options} && cd $WORKSPACE/main && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt", returnStatus: true)
+	sh ( "echo ${command} ${options} && cd $WORKSPACE/main && ${ACCESS} && terraform init && terraform ${command} ${options} && terraform show -no-color > show-${ENV_NAME}.txt")
 }
 
 pipeline {
