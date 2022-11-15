@@ -26,7 +26,7 @@ pipeline {
 
 		choice (name: 'AWS_REGION',
 				choices: ['ap-south-1','us-west-1', 'us-west-2'],
-				description: 'Pick A regions defaults to eu-central-1')
+				description: 'Pick A regions defaults to ap-south-1')
 		string (name: 'ENV_NAME',
 			   defaultValue: 'tf-customer1',
 			   description: 'Env or Customer name')
