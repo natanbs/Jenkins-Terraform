@@ -25,7 +25,7 @@ pipeline {
 	parameters {
 
 		choice (name: 'AWS_REGION',
-				choices: ['eu-central-1','us-west-1', 'us-west-2'],
+				choices: ['ap-south-1','us-west-1', 'us-west-2'],
 				description: 'Pick A regions defaults to eu-central-1')
 		string (name: 'ENV_NAME',
 			   defaultValue: 'tf-customer1',
@@ -34,10 +34,10 @@ pipeline {
 				choices: [ 'plan', 'apply', 'destroy'],
 				description: 'Run terraform plan / apply / destroy')
 		string (name: 'PROFILE',
-			   defaultValue: 'tikal',
-			   description: 'Optional. Target aws profile defaults to tikal')
+			   defaultValue: 'produser',
+			   description: 'Optional. Target aws profile defaults to produser')
 		string (name: 'EMAIL',
-			   defaultValue: 'natanb@tikalk.com',
+			   defaultValue: 'shasi008@gmail.com',
 			   description: 'Optional. Email notification')
     }
 	stages {
@@ -49,7 +49,7 @@ pipeline {
 							[ $class: 'AmazonWebServicesCredentialsBinding',
 								accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 								secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-								credentialsId: 'Tikal-AWS-access',
+								credentialsId: 'AWSCred',
 								]])
 							{
 							try {
@@ -91,7 +91,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'Tikal-AWS-access',
+									credentialsId: 'AWSCred',
 									]])
 								{
 								try {
@@ -125,7 +125,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'Tikal-AWS-access',
+									credentialsId: 'AWSCred',
 									]])
 								{
 								try {
@@ -172,7 +172,7 @@ pipeline {
 								[ $class: 'AmazonWebServicesCredentialsBinding',
 									accessKeyVariable: 'AWS_ACCESS_KEY_ID',
 									secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-									credentialsId: 'Tikal-AWS-access',
+									credentialsId: 'AWSCred',
 									]])
 								{
 								try {
