@@ -1,10 +1,7 @@
-profile        = "tikal"
-vendor_name    = "tikal"
-region         = "eu-central-1"
-bucket         = "tikal-terraform-state"
-primary_domain = "tikal.io"
-dynamodb_table = "TikalTerraformStatelock"
+region         = "ap-south-1"
+bucket         = "hashtek-terraform-state-bucket-1233"
+dynamodb_table = "hashtekTerraformStatelock-1233"
 env            = "tf-customer1"
 operators = [
-  "natanb",
+  "Manohar",
 ]
